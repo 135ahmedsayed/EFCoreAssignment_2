@@ -13,7 +13,7 @@ internal class Courses
     [Required]
     public string Name { get; set; }
     public string? Description { get; set; }
-    public ICollection<Topics> topics { get; set; }
+    public Topics topics { get; set; }
     [ForeignKey(nameof(Top_id))]
     public int Top_id { get; set; }
     public ICollection<Instructors> instructors { get; set; }

@@ -52,21 +52,6 @@ namespace EFCoreAssignment_2.Migrations
                     b.ToTable("CoursesStudent");
                 });
 
-            modelBuilder.Entity("CoursesTopics", b =>
-                {
-                    b.Property<int>("coursesId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("topicsId")
-                        .HasColumnType("int");
-
-                    b.HasKey("coursesId", "topicsId");
-
-                    b.HasIndex("topicsId");
-
-                    b.ToTable("CoursesTopics");
-                });
-
             modelBuilder.Entity("EFCoreAssignment_2.Models.Courses", b =>
                 {
                     b.Property<int>("Id")
@@ -86,7 +71,12 @@ namespace EFCoreAssignment_2.Migrations
                     b.Property<int>("Top_id")
                         .HasColumnType("int");
 
+                    b.Property<int>("topicsId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("topicsId");
 
                     b.ToTable("Course");
                 });
@@ -262,19 +252,15 @@ namespace EFCoreAssignment_2.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("CoursesTopics", b =>
+            modelBuilder.Entity("EFCoreAssignment_2.Models.Courses", b =>
                 {
-                    b.HasOne("EFCoreAssignment_2.Models.Courses", null)
-                        .WithMany()
-                        .HasForeignKey("coursesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("EFCoreAssignment_2.Models.Topics", null)
-                        .WithMany()
+                    b.HasOne("EFCoreAssignment_2.Models.Topics", "topics")
+                        .WithMany("courses")
                         .HasForeignKey("topicsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("topics");
                 });
 
             modelBuilder.Entity("EFCoreAssignment_2.Models.Departments", b =>
@@ -361,6 +347,11 @@ namespace EFCoreAssignment_2.Migrations
                     b.Navigation("StudCourses");
 
                     b.Navigation("departments");
+                });
+
+            modelBuilder.Entity("EFCoreAssignment_2.Models.Topics", b =>
+                {
+                    b.Navigation("courses");
                 });
 #pragma warning restore 612, 618
         }
