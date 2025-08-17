@@ -16,5 +16,9 @@ internal class Instructors
     public decimal Salary { get; set; }
     [Column(TypeName = "Decimal(5,2)")]
     public decimal? hourrate { get; set; }
+    public ICollection<Departments> departments { get; set; }
     public int Dep_id { get; set; }
+    public Departments departments1 { get; set; }
+    public ICollection<Courses> courses { get; set; }
+
 }
