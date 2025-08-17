@@ -12,21 +12,6 @@ namespace EFCoreAssignment_2.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Course",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false),
-                    Duration = table.Column<int>(type: "int", nullable: true),
-                    Name = table.Column<string>(type: "VarChar(15)", maxLength: 15, nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Top_id = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Course", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Topics",
                 columns: table => new
                 {
@@ -40,23 +25,21 @@ namespace EFCoreAssignment_2.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "CoursesTopics",
+                name: "Course",
                 columns: table => new
                 {
-                    coursesId = table.Column<int>(type: "int", nullable: false),
-                    topicsId = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false),
+                    Duration = table.Column<int>(type: "int", nullable: true),
+                    Name = table.Column<string>(type: "VarChar(15)", maxLength: 15, nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    topicsId = table.Column<int>(type: "int", nullable: false),
+                    Top_id = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CoursesTopics", x => new { x.coursesId, x.topicsId });
+                    table.PrimaryKey("PK_Course", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_CoursesTopics_Course_coursesId",
-                        column: x => x.coursesId,
-                        principalTable: "Course",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_CoursesTopics_Topics_topicsId",
+                        name: "FK_Course_Topics_topicsId",
                         column: x => x.topicsId,
                         principalTable: "Topics",
                         principalColumn: "Id",
@@ -200,6 +183,11 @@ namespace EFCoreAssignment_2.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_Course_topicsId",
+                table: "Course",
+                column: "topicsId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_CoursesInstructors_instructorsId",
                 table: "CoursesInstructors",
                 column: "instructorsId");
@@ -208,11 +196,6 @@ namespace EFCoreAssignment_2.Migrations
                 name: "IX_CoursesStudent_coursesId",
                 table: "CoursesStudent",
                 column: "coursesId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_CoursesTopics_topicsId",
-                table: "CoursesTopics",
-                column: "topicsId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Departments_Ins_Id",
@@ -299,16 +282,13 @@ namespace EFCoreAssignment_2.Migrations
                 name: "CoursesStudent");
 
             migrationBuilder.DropTable(
-                name: "CoursesTopics");
-
-            migrationBuilder.DropTable(
                 name: "StudCourses");
 
             migrationBuilder.DropTable(
-                name: "Topics");
+                name: "Course");
 
             migrationBuilder.DropTable(
-                name: "Course");
+                name: "Topics");
 
             migrationBuilder.DropTable(
                 name: "Instructors");
